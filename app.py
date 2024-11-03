@@ -12,7 +12,7 @@ from folium.features import GeoJsonTooltip
 # menú de navegación
 def sidebar_menu():
     st.sidebar.header("")
-    st.sidebar.image("logo.jpg", width=250)
+    st.sidebar.image("logo.png", width=250)
     st.sidebar.markdown("---")
     
     selected_page = st.sidebar.radio(
@@ -25,11 +25,18 @@ def sidebar_menu():
     return selected_page
 
 def home():
-    st.title("Bienvenido a la App de Calidad de Escuelas en Argentina")
+    st.title("Distribución de Migrantes Estudiantes y Condiciones Estructurales de las Escuelas Argentinas")
+
     st.write(
-    "Esta aplicación explora la calidad de las escuelas a las que asisten niños/as y adolescentes extranjeros en Argentina, "
-    "con un enfoque particular en los cuatro países con mayor cantidad de migrantes: **Bolivia,** **Paraguay,** **Perú** y **Venezuela**. "
-    "Aquí podrás encontrar datos sobre infraestructura, beneficios alimenticios gratuitos, y otros factores relevantes para estos grupos."
+        """
+        Esta aplicación presenta, desde los datos que recolectamos, las condiciones estructurales
+        de los distintos establecimientos educativos a los que asisten niños/as y adolescentes migrantes
+        en Argentina, como también nos permite visualizar la distribución de las distintas nacionalidades
+        de los mismos en las provincias del país, con un recorte particular en los cuatro países con mayor
+        cantidad de migrantes: Bolivia, Paraguay, Perú y Venezuela. Se pueden encontrar datos sobre la
+        infraestructa de los establecimientos académicos, la presencia o no de servicios y/o beneficios
+        públicos y gratuitos dentro de los mismos y otros factores relevantes para estos grupos.
+        """
     )
 
 
@@ -146,14 +153,14 @@ def estudiantes_extranjeros_por_provincia():
     with col2:
         st.write(
             """
-            Este mapa ilustra la distribución de nacionalidades extranjeras de los
-            estudiantes que asisten a escuelas primarias y secundarias en cada
-            provincia de Argentina para el año seleccionado. Al pasar el mouse sobre
-            una provincia, se despliega información detallada con los porcentajes
-            correspondientes a cada nacionalidad presente en esa región. Al hacer clic
+            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
+            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
+            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
+            sobre una provincia, se despliega información detallada con los porcentajes
+            correspondientes a cada nacionalidad presente en esa región. Al hacer click
             en una provincia, se mostrarán los valores totales en relación con esos
-            porcentajes, brindando una visión más clara de cómo se distribuyen estas
-            nacionalidades en el sistema educativo argentino.  
+            porcentajes, brindando una visión más clara de cómo se distribuyen las
+            nacionalidades en el sistema educativo argentino.
             """
         )
         
@@ -206,35 +213,69 @@ def beneficios():
 
     st.markdown("---")
 
-    c1, c2= st.columns([1,1])
+    c1, c2= st.columns([1,0.7])
     with c2:
-        col1, col2 = st.columns([0.2,2])
-        with col2:
-            if (tipo == ''):
-                st.image(f"beneficios_alimenticios/{nivel}/escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=570)
-            else:
-                st.image(f"beneficios_alimenticios/{nivel}/{tipo}/escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=570)
+        if (tipo == ''):
+            st.image(f"beneficios_alimenticios/{nivel}/escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=530)
+        else:
+            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=530)
 
     with c1:
         if (tipo == ''):
-            st.image(f"beneficios_alimenticios/{nivel}/barras_por_provincia_escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=690)
+            st.image(f"beneficios_alimenticios/{nivel}/barras_por_provincia_escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=830)
         else:
-            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/barras_por_provincia_escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=690)
+            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/barras_por_provincia_escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=830)
 
 
 def sector():
     st.title("Sectores Público y Privado")
-    st.write("Comparación de la cantidad de escuelas en el sector público versus el privado...")
+    st.write(
+        """
+        En esta sección, comparamos la distribución de escuelas entre los sectores
+        público y privado en Argentina. Puedes seleccionar diferentes años y tipos de escuela para
+        observar cómo se distribuyen las instituciones educativas y cómo varía la
+        presencia de estudiantes extranjeros en cada sector. Este análisis es clave
+        para entender las dinámicas de inclusión y el acceso a la educación en el
+        país.
+        """
+    )
+
+    year = st.selectbox("Selecciona el año:", range(2011, 2024))
+
+    opciones_tipo = {
+        "Total de escuelas": "",
+        "Escuelas con extranjeros": "extranjeros_",
+        "Escuelas sin extranjeros": "sin_extranjeros_"
+    }
+
+    seleccion = st.selectbox("Selecciona el tipo de escuela:", list(opciones_tipo.keys()))
+
+    tipo = opciones_tipo[seleccion]
+
+    st.markdown("---")
+
+    c1, c2= st.columns([1,1])
+    with c2:
+        col1, col2 = st.columns([0.2,2])
+        with col2:
+            st.image(f"sector/{year}/grafico_torta_escuelas_sector_{tipo}{year}.png", width=570)
+
+    with c1:
+            st.image(f"sector/{year}/porcentaje_de_escuelas_por_provincia_sector_{tipo}{year}.png", width=690)
+
+
     
 def infraestructura():
     st.title("Infraestructuras Escolares Esenciales")
     st.write(
         """
-        En esta sección exploramos las condiciones de infraestructura en las escuelas a las
-        que asisten estudiantes extranjeros en Argentina. Analizamos aspectos clave como la disponibilidad
-        de bibliotecas, conexión a internet y electricidad, elementos esenciales para un ambiente de
-        aprendizaje. Esta información permite entender mejor las oportunidades y desafíos que enfrentan
-        estas instituciones en cuanto a recursos y servicios básicos.
+        En esta sección exploramos las condiciones de infraestructura de los establecimientos
+        educativos a los que asisten estudiantes migrantes de los niveles primario y secundario
+        en toda la Argentina. Analizamos aspectos clave como la disponibilidad de bibliotecas,
+        la conexión a internet y si cuentan con electricidad, consideradas como elementos y
+        necesidades esenciales para un ambiente de aprendizaje. Esta información permite comprender
+        y visibilizar claramente las oportunidades y desafíos que enfrentan estas instituciones en
+        cuanto a recursos y servicios básicos.
         """
     )
 
@@ -319,6 +360,9 @@ def analisis():
 
     2. **Desestimación de datos inconsistentes:** Para asegurar la calidad de los análisis, ciertos registros fueron excluidos debido a inconsistencias en la información. Un ejemplo de esto son aquellos casos en los que las escuelas reportaron alumnos extranjeros en el cierto nivel educativo, pero al mismo tiempo, no declararon matrícula de estudiantes en dicho nivel. Estas discrepancias podrían generar confusión y afectar la precisión de las visualizaciones, por lo cual estos datos fueron descartados en nuestro trabajo.
 
+    3. **Consideración sobre la disponibilidad de datos:** Cuando se indica "sin datos" para un año específico, no significa necesariamente que no existan campos con información en la base de datos correspondiente. En algunos casos, aunque esta columna está presente, los datos no fueron relevados en los cuadernillos de relevamiento anual. Por ejemplo, entre 2011 y 2013, Venezuela se contaba como 'Otros países de América', y aunque desde 2012 se tiene una columna propia en la base de datos, la información sobre esta nacionalidad aparece discriminada en los cuadernillos de relevamiento a partir de 2014.
+    Asimismo, la columna correspondiente a la disponibilidad de biblioteca está presente en la base de datos de 2011, pero tampoco fue relevada en los cuadernillos de ese año, comenzando a ser registrada a partir del año siguiente. Estas distinciones son clave al analizar la información, ya que reflejan cómo se han categorizado los datos a lo largo del tiempo.
+
     Al tener en cuenta estas observaciones, se busca que los resultados sean lo más claros y precisos posibles. Sin embargo, invitamos a los usuarios a interpretar los datos con un grado de prudencia, especialmente cuando se observan valores que se alejan de las tendencias generales.
     """
 
@@ -330,8 +374,6 @@ def contacto():
     st.subheader("Formulario de Contacto")
 
     FORMSUBMIT_URL = "https://formsubmit.co/angeles.carrara@mi.unc.edu.ar"
-
-    st.header("Formulario de Contacto")
 
     name = st.text_input("Tu Nombre")
     email = st.text_input("Tu Correo Electrónico")
@@ -382,22 +424,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-# esto anda muestra el mapa de argentina con las provincias
-# def quality_data():
-
-#     with open("provincias.geojson", "r", encoding="utf-8") as f:
-#         geojson_data = json.load(f)
-
-#     # Configura el centro del mapa y el nivel de zoom inicial
-#     m = folium.Map(location=[-38.4161, -63.6167], zoom_start=4)
-
-#     # Añade el GeoJSON al mapa
-#     folium.GeoJson(
-#         geojson_data,
-#         name="Provincias de Argentina",
-#         tooltip=folium.GeoJsonTooltip(fields=["nombre"], aliases=["Provincia:"])
-#     ).add_to(m)
-
-#     # Muestra el mapa en la app de Streamlit
-#     st.title("Mapa de Argentina con Provincias")
-#     st_folium(m, width=700, height=500)
