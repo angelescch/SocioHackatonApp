@@ -78,6 +78,18 @@ def general_data():
                 st.write(f"Sin datos para el año {year}")
     
 def estudiantes_extranjeros_por_provincia():
+    st.markdown(
+        """
+        <script>
+        window.onscroll = function() {
+            if (document.body.scrollTop === 0 || document.documentElement.scrollTop === 0) {
+                location.reload();
+            }
+        };
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
         
     st.title("Estudiantes Extranjeros por provincia")
 
