@@ -12,14 +12,14 @@ from folium.features import GeoJsonTooltip
 # menú de navegación
 def sidebar_menu():
     st.sidebar.header("")
-    st.sidebar.image("logo.png", width=250)
+    st.sidebar.image("logo.png", width=200)
     st.sidebar.markdown("---")
     
     selected_page = st.sidebar.radio(
         "Selecciona una página:",
-        ["Inicio", "Estudiantes Extranjeros por Provincia", "Infraestructuras Escolares Esenciales",
-         "Beneficios Alimenticios Gratuitos", "Sectores Público y Privado", 
-         "Distribución de Nacionalidades Extranjeras en Argentina", "A tener en cuenta", "Contacto"],
+        ["Inicio", "Estudiantes Extranjeros por Provincia", "Distribución de Nacionalidades Extranjeras en Argentina",
+        "Beneficios Alimenticios Gratuitos","Infraestructuras Escolares Esenciales", "Sectores Público y Privado",
+        "A tener en cuenta", "Contacto"],
         index=0
     )
     return selected_page
@@ -45,29 +45,34 @@ def general():
     st.markdown("---")
     st.write(
         """
-        Conocé cómo se distribuyen los alumnos extranjeros de nivel primario y secundario en Argentina mediante
-        gráficos de barras. Nos enfocaremos en las nacionalidades más
-        representativas: Bolivia, Paraguay, Perú y Venezuela, y su presencia en
-        las diversas provincias del país. Analizaremos especialmente las cinco
-        provincias con mayor concentración de estas comunidades, lo que permitirá
-        entender mejor su distribución a nivel nacional.
+        En esta sección podes conocer cómo se distribuyen los/as alumnos/as extranjeros/as
+        de nivel primario y secundario en Argentina mediante gráficos de barras.
+        Nos enfocaremos en las nacionalidades más representativas en cantidad en el país:
+        Bolivia, Paraguay, Perú y Venezuela. Se presentan especialmente las cinco provincias
+        con mayor concentración de estas comunidades migrantes, lo que permitirá comprender
+        mejor su distribución a nivel nacional.
         """
     )
     
-    year = st.selectbox("Selecciona el año:", range(2011, 2024))
+
+    
+    col1, col2= st.columns([2, 1])
+
+    with col1:
+        year = st.selectbox("Selecciona el año:", range(2011, 2024))
+        st.markdown("---")
     
     countries = ["Bolivia", "Paraguay", "Perú", "Venezuela"]
-    
-    cols = st.columns(2)
 
     for i, country in enumerate(countries):
-        with cols[i % 2]:
+        with col1:
             st.subheader(country)
             if year >= 2014 or country != "Venezuela":
-                image_file = f"distribucion/{year}/distribucion_{country}_en_el_pais_{year}.png"
-                st.image(image_file, caption=f"Distribución de {country} en el año {year}", use_column_width='auto')
+                image_file = f"distribucion/{year}/distribucion_{country}en_el_pais{year}.png"
+                st.image(image_file, use_column_width='auto')
             else:
                 st.write(f"Sin datos para el año {year}")
+            st.markdown("---")
     
 def estudiantes_extranjeros_por_provincia():
         
@@ -192,9 +197,14 @@ def estudiantes_extranjeros_por_provincia():
 def beneficios():
     st.title("Beneficios Alimenticios Gratuitos")
     st.write(
-    "Esta sección proporciona información detallada sobre los beneficios alimenticios gratuitos disponibles en las escuelas de Argentina. "
-    "Podrás explorar estos datos de manera organizada, separándolos por año y por nivel educativo, ya sea en educación primaria o secundaria. "
-    "Los porcentajes reflejan la cantidad de escuelas que ofrecen beneficios alimenticios gratuitos, destacando su importancia en el acceso a la alimentación y el desarrollo de los estudiantes."
+        """
+        Esta sección presenta la información detallada sobre los establecimientos
+        educativos divididos en primario y secundario, que ofrecen a sus alumnos/as
+        beneficios alimenticios gratuitos a lo largo del país. Podrás explorar estos
+        datos separándolos por año y por nivel educativo. Los porcentajes reflejan la
+        cantidad de establecimientos que ofrecen el beneficio, destacamos la importancia
+        del acceso a la alimentación para un fructífero desarrollo de los/as estudiantes.
+        """
     )
 
     year = st.selectbox("Selecciona el año:", range(2011, 2024))
@@ -231,12 +241,13 @@ def sector():
     st.title("Sectores Público y Privado")
     st.write(
         """
-        En esta sección, comparamos la distribución de escuelas entre los sectores
-        público y privado en Argentina. Puedes seleccionar diferentes años y tipos de escuela para
-        observar cómo se distribuyen las instituciones educativas y cómo varía la
-        presencia de estudiantes extranjeros en cada sector. Este análisis es clave
-        para entender las dinámicas de inclusión y el acceso a la educación en el
-        país.
+        En esta sección comparamos la distribución de los establecimientos educativos
+        que ofrecen un servicio público o privado a sus alumnos/as en Argentina.
+        Puedes seleccionar diferentes años y opciones de los establecimientos para
+        observar cómo se distribuyen las instituciones educativas y cómo varía según
+        la presencia de estudiantes extranjeros/as según cada servicio. Este análisis
+        es clave para entender las dinámicas de inclusión para la población migrante
+        y el acceso gratuito o pago que tienen en la educación en el país.
         """
     )
 
@@ -358,7 +369,7 @@ def analisis():
 
     1. **Posibles mediciones extremas:** Algunos valores pueden parecer anormalmente altos o bajos. Esto ocurre en ciertas ocasiones debido a la falta de datos representativos, ya que las mediciones realizadas sobre una base de datos pequeña o incompleta pueden mostrar tendencias o extremos que no reflejan el panorama general.
 
-    2. **Desestimación de datos inconsistentes:** Para asegurar la calidad de los análisis, ciertos registros fueron excluidos debido a inconsistencias en la información. Un ejemplo de esto son aquellos casos en los que las escuelas reportaron alumnos extranjeros en el cierto nivel educativo, pero al mismo tiempo, no declararon matrícula de estudiantes en dicho nivel. Estas discrepancias podrían generar confusión y afectar la precisión de las visualizaciones, por lo cual estos datos fueron descartados en nuestro trabajo.
+    2. **Desestimación de datos inconsistentes:** Para asegurar la calidad de los análisis, ciertos registros fueron excluidos debido a inconsistencias en la información. Un ejemplo de esto son aquellos casos en los que las escuelas reportaron alumnos extranjeros en cierto nivel educativo, pero al mismo tiempo, no declararon matrícula de estudiantes en dicho nivel. Estas discrepancias podrían generar confusión y afectar la precisión de las visualizaciones, por lo cual estos datos fueron descartados en nuestro trabajo.
 
     3. **Consideración sobre la disponibilidad de datos:** Cuando se indica "sin datos" para un año específico, no significa necesariamente que no existan campos con información en la base de datos correspondiente. En algunos casos, aunque esta columna está presente, los datos no fueron relevados en los cuadernillos de relevamiento anual. Por ejemplo, entre 2011 y 2013, Venezuela se contaba como 'Otros países de América', y aunque desde 2012 se tiene una columna propia en la base de datos, la información sobre esta nacionalidad aparece discriminada en los cuadernillos de relevamiento a partir de 2014.
     Asimismo, la columna correspondiente a la disponibilidad de biblioteca está presente en la base de datos de 2011, pero tampoco fue relevada en los cuadernillos de ese año, comenzando a ser registrada a partir del año siguiente. Estas distinciones son clave al analizar la información, ya que reflejan cómo se han categorizado los datos a lo largo del tiempo.
