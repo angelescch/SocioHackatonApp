@@ -69,31 +69,32 @@ def home():
 
 
 def general():
-    st.title("Distribución de Nacionalidades Extranjeras en Argentina")
+   
+    col1, col2, col3= st.columns([1,10, 1])
+
+    with col2:
+        st.title("Distribución de Nacionalidades Extranjeras en Argentina")
+
     st.markdown("---")
-    st.write(
-        """
-        En esta sección podes conocer cómo se distribuyen los/as alumnos/as extranjeros/as
-        de nivel primario y secundario en Argentina mediante gráficos de barras.
-        Nos enfocaremos en las nacionalidades más representativas en cantidad en el país:
-        Bolivia, Paraguay, Perú y Venezuela. Se presentan especialmente las cinco provincias
-        con mayor concentración de estas comunidades migrantes, lo que permitirá comprender
-        mejor su distribución a nivel nacional.
-        """
-    )
-    
 
-    
-    col1, col2= st.columns([2, 1])
-
-    with col1:
+    with col2:
+        st.write(
+        """
+            En esta sección podes conocer cómo se distribuyen los/as alumnos/as extranjeros/as
+            de nivel primario y secundario en Argentina mediante gráficos de barras.
+            Nos enfocaremos en las nacionalidades más representativas en cantidad en el país:
+            Bolivia, Paraguay, Perú y Venezuela. Se presentan especialmente las cinco provincias
+            con mayor concentración de estas comunidades migrantes, lo que permitirá comprender
+            mejor su distribución a nivel nacional.
+            """
+        )
         year = st.selectbox("Selecciona el año:", range(2011, 2024))
         st.markdown("---")
     
     countries = ["Bolivia", "Paraguay", "Perú", "Venezuela"]
 
     for i, country in enumerate(countries):
-        with col1:
+        with col2:
             st.subheader(country)
             if year >= 2014 or country != "Venezuela":
                 image_file = f"distribucion/{year}/distribucion_{country}en_el_pais{year}.png"
@@ -260,9 +261,9 @@ def beneficios():
     nivel = nivel.lower()
 
     opciones_tipo = {
+        "Total de escuelas": "",
         "Escuelas con extranjeros": "con_extranjeros",
-        "Escuelas sin extranjeros": "sin_extranjeros",
-        "Total de escuelas": ""
+        "Escuelas sin extranjeros": "sin_extranjeros"
     }
 
     seleccion = st.selectbox("Selecciona el tipo de escuela:", list(opciones_tipo.keys()))
