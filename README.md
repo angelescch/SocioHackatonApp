@@ -30,3 +30,13 @@ Más detalle sobre el proyecto y procesamiento de los datos [aquí](https://gith
 pip install -r requirements.txt
 streamlit run app.py
 ```
+
+## Trabajo a Futuro
+
+En futuras actualizaciones de la aplicación, se contemplan las siguientes mejoras:
+
+- **Factorizar el código**: Revisar y simplificar el código para mejorar la legibilidad y la mantenibilidad, reduciendo la duplicación de código y mejorando la modularidad.
+- **Unificar estilo**: Establecer y aplicar un estilo de codificación consistente a lo largo del proyecto para facilitar la colaboración y la comprensión del código por parte de otros desarrolladores.
+- **Mejorar la compatibilidad móvil**: Hacer que la aplicación sea más responsive y amigable para dispositivos móviles, asegurando que todos los elementos de la interfaz de usuario se adapten adecuadamente a diferentes tamaños de pantalla.
+
+Estas mejoras no solo aumentarán la calidad del código, sino que también proporcionarán una mejor experiencia de usuario.
