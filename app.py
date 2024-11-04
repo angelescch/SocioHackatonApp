@@ -12,7 +12,7 @@ from folium.features import GeoJsonTooltip
 # menú de navegación
 def sidebar_menu():
     st.sidebar.header("")
-    st.sidebar.image("logo.png", width=200)
+    st.sidebar.image("logo.png", use_column_width='auto')
     st.sidebar.markdown("---")
     
     selected_page = st.sidebar.radio(
@@ -25,19 +25,47 @@ def sidebar_menu():
     return selected_page
 
 def home():
-    st.title("Distribución de Migrantes Estudiantes y Condiciones Estructurales de las Escuelas Argentinas")
 
-    st.write(
-        """
-        Esta aplicación presenta, desde los datos que recolectamos, las condiciones estructurales
-        de los distintos establecimientos educativos a los que asisten niños/as y adolescentes migrantes
-        en Argentina, como también nos permite visualizar la distribución de las distintas nacionalidades
-        de los mismos en las provincias del país, con un recorte particular en los cuatro países con mayor
-        cantidad de migrantes: Bolivia, Paraguay, Perú y Venezuela. Se pueden encontrar datos sobre la
-        infraestructa de los establecimientos académicos, la presencia o no de servicios y/o beneficios
-        públicos y gratuitos dentro de los mismos y otros factores relevantes para estos grupos.
-        """
-    )
+
+    p1, p2, p3 = st.columns([1,7,1])
+    with p2:
+        st.title("Distribución de Estudiantes Migrantes y Condiciones Estructurales de las Escuelas Argentinas")
+
+        st.write(
+            """
+            Esta aplicación presenta, desde los datos que recolectamos, las condiciones estructurales
+            de los distintos establecimientos educativos a los que asisten niños/as y adolescentes migrantes
+            en Argentina, como también nos permite visualizar la distribución de las distintas nacionalidades
+            de los mismos en las provincias del país, con un recorte particular en los cuatro países con mayor
+            cantidad de migrantes: Bolivia, Paraguay, Perú y Venezuela. Se pueden encontrar datos sobre la
+            infraestructa de los establecimientos académicos, la presencia o no de servicios y/o beneficios
+            públicos y gratuitos dentro de los mismos y otros factores relevantes para estos grupos.
+            """
+        )
+        st.markdown("---") 
+
+        st.markdown(
+            """
+            #### Integrantes del Proyecto
+            En orden alfabético:
+            - **Ángeles M. Carrara**. Estudiante de la Licenciatura en Computación, Facultad de Matemática, Astronomía, Física y Computación.
+            - **Antonella G. Giletta**. Estudiante de la Licenciatura en Sociología, Facultad de Ciencias Sociales y de Abogacía, Facultad de Derecho.
+            - **Paola Benitez Siciliano**. Estudiante de la Licenciatura en Sociología, Facultad de Ciencias Sociales.
+            - **Paulina Castillo**. Estudiante de la Licenciatura en Ciencia Política, Facultad de Ciencias Sociales.
+            - **Rocío Perez Sbarato**. Estudiante de la Licenciatura en Computación, Facultad de Matemática, Astronomía, Física y Computación.
+            ---
+            """
+        )
+
+        st.markdown(
+            """            
+            El presente trabajo fue elaborado en el marco de la convocatoria del evento **Socio-hackaton “Investigar en Sociales 2024”**, 
+            en el marco de las **II Jornadas Investigar en Sociales** de la **Facultad de Ciencias Sociales de la Universidad Nacional de Córdoba**.
+            """
+        )
+
+
+        st.markdown("---") 
 
 
 def general():
@@ -81,9 +109,9 @@ def estudiantes_extranjeros_por_provincia():
     year = st.selectbox("Selecciona el año:", range(2011, 2024))
 
     with st.expander(f"Información Completa del año {year}", expanded=False):
-        col1, col2, col3 = st.columns([0.7, 2, 0.7])
+        col1, col2, col3 = st.columns([1, 5, 1])
         with col2:
-            st.image(f"extranjeros_por_provincia/tabla_distribucion_nacionalidades_{year}.png", width=800) 
+            st.image(f"extranjeros_por_provincia/tabla_distribucion_nacionalidades_{year}.png", use_column_width='auto') 
 
     st.markdown("---")
 
@@ -143,32 +171,22 @@ def estudiantes_extranjeros_por_provincia():
             sticky=True
         )
     ).add_to(mapa)
-
-    col1, col2 = st.columns([1.7, 3.3])
+    
+    col1, col2 = st.columns([4, 6])
 
     with col1:
+        p1, p2 = st.columns([12, 1])
 
-        st_mapa = st_folium(mapa, width=400, height=600)
+        with p1:
+            st_mapa = st_folium(mapa, width=400, use_container_width=True)
 
-        prov = ''
-        if st_mapa['last_active_drawing']:
-            prov = st_mapa['last_active_drawing']['properties']['nombre']
+            prov = ''
+            if st_mapa['last_active_drawing']:
+                prov = st_mapa['last_active_drawing']['properties']['nombre']
 
 
     with col2:
-        st.write(
-            """
-            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
-            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
-            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
-            sobre una provincia, se despliega información detallada con los porcentajes
-            correspondientes a cada nacionalidad presente en esa región. Al hacer click
-            en una provincia, se mostrarán los valores totales en relación con esos
-            porcentajes, brindando una visión más clara de cómo se distribuyen las
-            nacionalidades en el sistema educativo argentino.
-            """
-        )
-        
+
         if (prov != ''):
             row = data[data['provincia'] == prov]
             if not row.empty:
@@ -191,6 +209,36 @@ def estudiantes_extranjeros_por_provincia():
                 with c6:
                     if (year >= 2014):
                         st.metric("Otros", string_format.format(int(row['Otros'])))
+                
+                e1, e2, e3, e4, e5 = st.columns(5)
+                with e1:
+                    st.metric("Porcentaje Bolivia", f"{string_format.format(float(row['porcentaje_Bolivia']))} %")
+                with e2:
+                    st.metric("Porcentaje Paraguay", f"{string_format.format(float(row['porcentaje_Paraguay']))} %")
+                with e3: 
+                    st.metric("Porcentaje Perú", f"{string_format.format(float(row['porcentaje_Perú']))} %")
+                with e4:
+                    if (year <= 2013):
+                        st.metric("Porcentaje Otros", f"{string_format.format(float(row['porcentaje_Otros']))} %")
+                    else:
+                        st.metric("Porcentaje Venezuela", f"{string_format.format(float(row['porcentaje_Venezuela']))} %")
+                with e5:
+                    if (year >= 2014):
+                        st.metric("Porcentaje Otros", f"{string_format.format(float(row['porcentaje_Otros']))} %")
+        st.markdown(
+            """
+            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
+            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
+            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
+            sobre una provincia, se despliega información detallada con los porcentajes
+            correspondientes a cada nacionalidad presente en esa región. Al hacer click
+            en una provincia, se mostrarán los valores totales en relación con esos
+            porcentajes, brindando una visión más clara de cómo se distribuyen las
+            nacionalidades en el sistema educativo argentino.
+            """
+        )
+        
+
 
     return prov
     
