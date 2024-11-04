@@ -16,7 +16,7 @@ Este repositorio consiste en el anexo de código del tablero para la visualizaci
 Más detalle sobre el proyecto y procesamiento de los datos [aquí](https://github.com/rocio-perez-sbarato/SocioHackaton). 
 
 ## Screenshot
-![Screenshot](screenshot.png)
+![Screenshot](Screenshot.png)
 
 ## Demo 
 
