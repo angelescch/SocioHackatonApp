@@ -75,7 +75,6 @@ def general():
     with col2:
         st.title("Distribución de Nacionalidades Extranjeras en Argentina")
 
-    st.markdown("---")
 
     with col2:
         st.write(
@@ -179,7 +178,7 @@ def estudiantes_extranjeros_por_provincia():
         p1, p2 = st.columns([12, 1])
 
         with p1:
-            st_mapa = st_folium(mapa, width=400, use_container_width=True)
+            st_mapa = st_folium(mapa, use_container_width=True)
 
             prov = ''
             if st_mapa['last_active_drawing']:
@@ -187,6 +186,19 @@ def estudiantes_extranjeros_por_provincia():
 
 
     with col2:
+
+        st.markdown(
+            """
+            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
+            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
+            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
+            sobre una provincia, se despliega información detallada con los porcentajes
+            correspondientes a cada nacionalidad presente en esa región. Al hacer click
+            en una provincia, se mostrarán los valores totales en relación con esos
+            porcentajes, brindando una visión más clara de cómo se distribuyen las
+            nacionalidades en el sistema educativo argentino.
+            """
+        )
 
         if (prov != ''):
             row = data[data['provincia'] == prov]
@@ -226,18 +238,7 @@ def estudiantes_extranjeros_por_provincia():
                 with e5:
                     if (year >= 2014):
                         st.metric("Porcentaje Otros", f"{string_format.format(float(row['porcentaje_Otros']))} %")
-        st.markdown(
-            """
-            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
-            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
-            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
-            sobre una provincia, se despliega información detallada con los porcentajes
-            correspondientes a cada nacionalidad presente en esa región. Al hacer click
-            en una provincia, se mostrarán los valores totales en relación con esos
-            porcentajes, brindando una visión más clara de cómo se distribuyen las
-            nacionalidades en el sistema educativo argentino.
-            """
-        )
+
         
 
 
@@ -275,15 +276,15 @@ def beneficios():
     c1, c2= st.columns([1,0.7])
     with c2:
         if (tipo == ''):
-            st.image(f"beneficios_alimenticios/{nivel}/escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=530)
+            st.image(f"beneficios_alimenticios/{nivel}/escuelas_{nivel}s_con_y_sin_comida_{year}.png", use_column_width='auto')
         else:
-            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=530)
+            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", use_column_width='auto')
 
     with c1:
         if (tipo == ''):
-            st.image(f"beneficios_alimenticios/{nivel}/barras_por_provincia_escuelas_{nivel}s_con_y_sin_comida_{year}.png", width=830)
+            st.image(f"beneficios_alimenticios/{nivel}/barras_por_provincia_escuelas_{nivel}s_con_y_sin_comida_{year}.png", use_column_width='auto')
         else:
-            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/barras_por_provincia_escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", width=830)
+            st.image(f"beneficios_alimenticios/{nivel}/{tipo}/barras_por_provincia_escuelas_{nivel}s_{tipo}_con_y_sin_comida_{year}.png", use_column_width='auto')
 
 
 def sector():
@@ -318,10 +319,10 @@ def sector():
     with c2:
         col1, col2 = st.columns([0.2,2])
         with col2:
-            st.image(f"sector/{year}/grafico_torta_escuelas_sector_{tipo}{year}.png", width=570)
+            st.image(f"sector/{year}/grafico_torta_escuelas_sector_{tipo}{year}.png", use_column_width='auto')
 
     with c1:
-            st.image(f"sector/{year}/porcentaje_de_escuelas_por_provincia_sector_{tipo}{year}.png", width=690)
+            st.image(f"sector/{year}/porcentaje_de_escuelas_por_provincia_sector_{tipo}{year}.png", use_column_width='auto')
 
 
     
@@ -402,12 +403,12 @@ def infraestructura():
         if (infraestructura != "biblioteca" or year != 2011):
             col1, col2 = st.columns([0.2,2])
             with col2:
-                    st.image(f"infraestructura/{infraestructura}/{year}/grafico_torta_{opciones_torta[infraestructura]}_{opciones_tipo_torta[infraestructura][seleccion]}{year}.png", width=570)
+                    st.image(f"infraestructura/{infraestructura}/{year}/grafico_torta_{opciones_torta[infraestructura]}_{opciones_tipo_torta[infraestructura][seleccion]}{year}.png", use_column_width='auto')
         else:
             st.write(f"Sin Datos para el año {year}")
     with c1:
         if (infraestructura != "biblioteca" or year != 2011):
-            st.image(f"infraestructura/{infraestructura}/{year}/porcentaje_de_escuelas_por_provincia_{opciones_barra[infraestructura]}_{opciones_tipo_barra[infraestructura][seleccion]}{year}.png", width=690)
+            st.image(f"infraestructura/{infraestructura}/{year}/porcentaje_de_escuelas_por_provincia_{opciones_barra[infraestructura]}_{opciones_tipo_barra[infraestructura][seleccion]}{year}.png", use_column_width='auto')
         else:
             st.write(f"Sin Datos para el año {year}")
 
