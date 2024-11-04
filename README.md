@@ -1,4 +1,4 @@
-# La permanencia de la desigualdad. Del derecho al hecho.
+# Migrantes en la escuela argentina. Del derecho al hecho.
 **Análisis de la distribución de niños/as y adolescentes migrantes en las escuelas argentinas y las condiciones estructurales de los establecimientos educativos, entre 2011 y 2023.**
 
 **Integrantes**
