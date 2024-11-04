@@ -106,7 +106,22 @@ def estudiantes_extranjeros_por_provincia():
         
     st.title("Estudiantes Extranjeros por provincia")
 
-    year = st.selectbox("Selecciona el año:", range(2011, 2024))
+    st.markdown(
+        """
+        Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
+        de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
+        en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
+        sobre una provincia, se despliega información detallada con los porcentajes
+        correspondientes a cada nacionalidad presente en esa región. Al hacer click
+        en una provincia, se mostrarán los valores totales en relación con esos
+        porcentajes, brindando una visión más clara de cómo se distribuyen las
+        nacionalidades en el sistema educativo argentino. Por defecto, se encuentra
+        seleccionada la provincia de Córdoba.
+        """
+    )
+
+    year = st.selectbox("Selecciona el año:", range(2011, 2024), index=0)
+    prov = 'Córdoba'
 
     with st.expander(f"Información Completa del año {year}", expanded=False):
         col1, col2, col3 = st.columns([1, 5, 1])
@@ -140,7 +155,7 @@ def estudiantes_extranjeros_por_provincia():
                     'porcentaje_Venezuela': float(row['porcentaje_Venezuela']),
                 })
 
-    mapa = folium.Map(location=[-40.4161, -63.6167], zoom_start=4, scrollWheelZoom=False)
+    mapa = folium.Map(location=[-40.4161, -63.6167], zoom_start=4, scrollWheelZoom=False, touchZoom=True)
 
     fields = ['nombre', 'porcentaje_Bolivia', 'porcentaje_Paraguay', 'porcentaje_Perú']
     aliases = ["Provincia", "% Bolivia:", "% Paraguay:", "% Perú:"]
@@ -180,25 +195,11 @@ def estudiantes_extranjeros_por_provincia():
         with p1:
             st_mapa = st_folium(mapa, use_container_width=True)
 
-            prov = ''
             if st_mapa['last_active_drawing']:
                 prov = st_mapa['last_active_drawing']['properties']['nombre']
 
 
     with col2:
-
-        st.markdown(
-            """
-            Este mapa ilustra la distribución de las diversas nacionalidades extranjeras
-            de los/as estudiantes migrantes que asisten a escuelas primarias y secundarias
-            en cada provincia de la Argentina para el año seleccionado. Al pasar el mouse
-            sobre una provincia, se despliega información detallada con los porcentajes
-            correspondientes a cada nacionalidad presente en esa región. Al hacer click
-            en una provincia, se mostrarán los valores totales en relación con esos
-            porcentajes, brindando una visión más clara de cómo se distribuyen las
-            nacionalidades en el sistema educativo argentino.
-            """
-        )
 
         if (prov != ''):
             row = data[data['provincia'] == prov]
